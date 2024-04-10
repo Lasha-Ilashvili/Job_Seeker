@@ -1,6 +1,6 @@
 package com.example.job_seeker.data.service.jobs
 
-import okhttp3.ResponseBody
+import com.example.job_seeker.data.model.jobs.JobDto
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -14,5 +14,5 @@ interface JobsService {
         @Path("country") country: String,
         @Path("page") page: Int,
         @Query("results_per_page") size: Int
-    ): Response<ResponseBody>
+    ): Response<JobDto>
 }

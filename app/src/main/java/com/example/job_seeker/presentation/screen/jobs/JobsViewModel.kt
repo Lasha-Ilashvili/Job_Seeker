@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.job_seeker.data.common.Resource
 import com.example.job_seeker.domain.usecase.jobs.GetJobsUseCase
 import com.example.job_seeker.presentation.event.jobs.JobsEvent
+import com.example.job_seeker.presentation.mapper.jobs.toPresentation
 import com.example.job_seeker.presentation.state.jobs.JobsState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,7 +37,13 @@ class JobsViewModel @Inject constructor(
                 .collect {
                     if (it is Resource.Success)
                         _jobsState.update { currentState ->
-                            currentState.copy(data = it.data)
+                            currentState.copy(data = it.data.map { getJob ->
+                                getJob.toPresentation()
+                            })
+                        }
+                    else if (it is Resource.Error)
+                        _jobsState.update { currentState ->
+                            currentState.copy(errorMessage = it.errorMessage)
                         }
                 }
         }

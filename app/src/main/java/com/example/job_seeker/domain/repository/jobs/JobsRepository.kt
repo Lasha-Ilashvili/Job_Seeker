@@ -1,10 +1,10 @@
 package com.example.job_seeker.domain.repository.jobs
 
 import com.example.job_seeker.data.common.Resource
+import com.example.job_seeker.domain.model.jobs.GetJob
 import kotlinx.coroutines.flow.Flow
-import okhttp3.ResponseBody
 
 
 interface JobsRepository {
-    suspend fun getJobs(): Flow<Resource<ResponseBody>>
+    suspend fun getJobs(): Flow<Resource<List<GetJob>>>
 }

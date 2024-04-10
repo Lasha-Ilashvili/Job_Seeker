@@ -38,8 +38,12 @@ class JobsFragment : BaseFragment<FragmentJobsBinding>(FragmentJobsBinding::infl
     }
 
     private fun handleState(jobsState: JobsState) {
-        jobsState.data?.let {
+        jobsState.errorMessage?.let {
+            println(it)
+        }
 
+        jobsState.data?.let {
+            println(it)
         }
     }
 }
