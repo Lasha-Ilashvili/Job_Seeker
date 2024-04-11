@@ -18,7 +18,8 @@ class JobsFragment : BaseFragment<FragmentJobsBinding>(FragmentJobsBinding::infl
     private val viewModel: JobsViewModel by viewModels()
 
     override fun setUp() {
-        getJobs()
+//        getJobs()
+        viewModel.onEvent(JobsEvent.GetUserJobs)
     }
 
     override fun observe() {
@@ -37,13 +38,18 @@ class JobsFragment : BaseFragment<FragmentJobsBinding>(FragmentJobsBinding::infl
         viewModel.onEvent(JobsEvent.GetJobs)
     }
 
-    private fun handleState(jobsState: JobsState) {
-        jobsState.errorMessage?.let {
+    private fun handleState(jobsState: JobsState) = with(jobsState) {
+        errorMessage?.let {
             println(it)
+            viewModel.onEvent(JobsEvent.ResetErrorMessage)
         }
 
-        jobsState.data?.let {
-            println(it)
+        jobs?.let {
+
+        }
+
+        userJobs?.let {
+
         }
     }
 }

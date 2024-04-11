@@ -10,8 +10,8 @@ fun JobDto.toDomain() = jobItems.map {
 
 private fun JobDto.JobItem.toDomain() = GetJob(
     id = id,
-    salaryMax = salaryMax,
-    salaryMin = salaryMin,
+    salaryMax = salaryMax ?: 0.0,
+    salaryMin = salaryMin ?: 0.0,
     created = created,
     category = category.category,
     contractType = contractType,

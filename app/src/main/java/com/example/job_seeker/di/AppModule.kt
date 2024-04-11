@@ -6,6 +6,10 @@ import com.example.job_seeker.BuildConfig.BASE_URL
 import com.example.job_seeker.BuildConfig.DEBUG
 import com.example.job_seeker.data.common.HandleResponse
 import com.example.job_seeker.data.service.jobs.JobsService
+import com.example.job_seeker.data.data_source.user_jobs.UserJobsDataSource
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -93,5 +97,17 @@ object AppModule {
     @Provides
     fun provideJobsService(retrofit: Retrofit): JobsService {
         return retrofit.create(JobsService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideFireStore(): FirebaseFirestore {
+        return Firebase.firestore
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserJobsDataSource(fireStore: FirebaseFirestore): UserJobsDataSource {
+        return UserJobsDataSource(fireStore)
     }
 }

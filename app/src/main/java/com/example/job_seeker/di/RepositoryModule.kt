@@ -1,9 +1,12 @@
 package com.example.job_seeker.di
 
 import com.example.job_seeker.data.common.HandleResponse
+import com.example.job_seeker.data.data_source.user_jobs.UserJobsDataSource
 import com.example.job_seeker.data.repository.jobs.JobsRepositoryImpl
+import com.example.job_seeker.data.repository.user_jobs.UserJobsRepositoryImpl
 import com.example.job_seeker.data.service.jobs.JobsService
 import com.example.job_seeker.domain.repository.jobs.JobsRepository
+import com.example.job_seeker.domain.repository.user_jobs.UserJobsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,6 +26,18 @@ object RepositoryModule {
         return JobsRepositoryImpl(
             handleResponse = handleResponse,
             jobsService = jobsService
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserJobsRepository(
+        userJobsDataSource: UserJobsDataSource,
+        handleResponse: HandleResponse
+    ): UserJobsRepository {
+        return UserJobsRepositoryImpl(
+            userJobsDataSource = userJobsDataSource,
+            handleResponse = handleResponse
         )
     }
 }

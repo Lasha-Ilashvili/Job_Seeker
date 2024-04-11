@@ -10,9 +10,9 @@ data class JobDto(
     data class JobItem(
         val id: String,
         @Json(name = "salary_max")
-        val salaryMax: Double,
+        val salaryMax: Double?,
         @Json(name = "salary_min")
-        val salaryMin: Double,
+        val salaryMin: Double?,
         val created: String,
         val category: Category,
         @Json(name = "contract_type")

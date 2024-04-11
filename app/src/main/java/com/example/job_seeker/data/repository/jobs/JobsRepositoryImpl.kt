@@ -8,10 +8,9 @@ import com.example.job_seeker.data.service.jobs.JobsService
 import com.example.job_seeker.domain.model.jobs.GetJob
 import com.example.job_seeker.domain.repository.jobs.JobsRepository
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
 
-class JobsRepositoryImpl @Inject constructor(
+class JobsRepositoryImpl(
     private val jobsService: JobsService,
     private val handleResponse: HandleResponse
 ) : JobsRepository {

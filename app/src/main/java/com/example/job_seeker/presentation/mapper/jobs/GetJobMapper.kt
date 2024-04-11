@@ -3,6 +3,7 @@ package com.example.job_seeker.presentation.mapper.jobs
 import com.example.job_seeker.domain.model.jobs.GetJob
 import com.example.job_seeker.presentation.extension.toPresentation
 import com.example.job_seeker.presentation.model.jobs.Job
+import kotlin.math.roundToInt
 
 
 fun GetJob.toPresentation() = Job(
@@ -26,16 +27,10 @@ private fun formatSalary(salaryMin: Double, salaryMax: Double): String {
     val formattedMax = formatSalary(salaryMax)
 
     return if (salaryMin == salaryMax) {
-        "$formattedMin/yr"
+        formattedMin
     } else {
-        "$formattedMin - $formattedMax/yr"
+        "$formattedMin - $formattedMax"
     }
 }
 
-private fun formatSalary(salary: Double): String {
-    return if (salary >= 1000) {
-        "$${salary / 1000}K"
-    } else {
-        "$${salary}"
-    }
-}
+private fun formatSalary(salary: Double): String = "$${(salary / 1000.0).roundToInt()}K/yr"
