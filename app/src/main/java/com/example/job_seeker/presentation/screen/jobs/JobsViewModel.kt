@@ -3,6 +3,7 @@ package com.example.job_seeker.presentation.screen.jobs
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.job_seeker.data.common.Resource
+import com.example.job_seeker.domain.usecase.auth.FireBaseUserUidUseCase
 import com.example.job_seeker.domain.usecase.jobs.GetJobsUseCase
 import com.example.job_seeker.domain.usecase.user_jobs.AddUserJobUseCase
 import com.example.job_seeker.domain.usecase.user_jobs.DeleteUserJobUseCase
@@ -24,6 +25,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class JobsViewModel @Inject constructor(
+    private val fireBaseUserUidUseCase: FireBaseUserUidUseCase,
     private val getJobsUseCase: GetJobsUseCase,
     private val addUserJobUseCase: AddUserJobUseCase,
     private val getUserJobsUseCase: GetUserJobsUseCase,
@@ -36,7 +38,7 @@ class JobsViewModel @Inject constructor(
     fun onEvent(event: JobsEvent) = with(event) {
         when (this) {
             is JobsEvent.AddUserJob -> addUserJob(job = job)
-            is JobsEvent.DeleteUserJob -> deleteUserJob(documentId = documentId)
+            is JobsEvent.DeleteUserJob -> deleteUserJob(userUid = userUid, jobId = jobId)
             JobsEvent.GetJobs -> getJobs()
             JobsEvent.GetUserJobs -> getUserJobs()
             JobsEvent.ResetErrorMessage -> updateErrorMessage()
@@ -80,6 +82,7 @@ class JobsViewModel @Inject constructor(
     private fun getUserJob(job: Job): UserJob = with(job) {
         UserJob(
             id = id,
+            userUid = fireBaseUserUidUseCase(),
             title = title,
             company = company,
             date = date,
@@ -90,14 +93,12 @@ class JobsViewModel @Inject constructor(
             description = description,
             location = location,
             redirectUrl = redirectUrl,
-            latitude = latitude,
-            longitude = longitude
         )
     }
 
     private fun getUserJobs() {
         viewModelScope.launch {
-            getUserJobsUseCase().collect {
+            getUserJobsUseCase(userUid = fireBaseUserUidUseCase()).collect {
                 when (it) {
                     is Resource.Success -> _jobsState.update { currentState ->
                         currentState.copy(userJobs = it.data.map { getUserJob ->
@@ -115,9 +116,9 @@ class JobsViewModel @Inject constructor(
         }
     }
 
-    private fun deleteUserJob(documentId: String?) {
+    private fun deleteUserJob(userUid: String, jobId: String) {
         viewModelScope.launch {
-            deleteUserJobUseCase(documentId = documentId).collect {
+            deleteUserJobUseCase(userUid = userUid, jobId = jobId).collect {
                 when (it) {
                     is Resource.Success -> {}
 

@@ -6,7 +6,7 @@ import com.example.job_seeker.presentation.model.user_jobs.UserJob
 
 fun GetUserJob.toPresentation() = UserJob(
     id = id,
-    documentId = documentId,
+    userUid = userUid,
     title = title,
     company = company,
     date = date,
@@ -17,6 +17,4 @@ fun GetUserJob.toPresentation() = UserJob(
     description = description,
     location = location,
     redirectUrl = redirectUrl,
-    latitude = latitude,
-    longitude = longitude
 )

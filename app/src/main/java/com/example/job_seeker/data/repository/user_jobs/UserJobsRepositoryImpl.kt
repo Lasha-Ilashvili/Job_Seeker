@@ -20,26 +20,24 @@ class UserJobsRepositoryImpl(
     override suspend fun addUserJob(userJob: GetUserJob): Flow<Resource<Unit>> {
         return handleResponse.safeFireBaseCall {
             userJobsDataSource.addUserJob(userJob.toData())
-        }.asResource {}
+        }
     }
 
-    override suspend fun getUserJobs(): Flow<Resource<List<GetUserJob>>> {
+    override suspend fun getUserJobs(userUid: String): Flow<Resource<List<GetUserJob>>> {
         return handleResponse.safeFireBaseCall {
-            userJobsDataSource.getUserJobs()
+            userJobsDataSource.getUserJobs(userUid = userUid)
         }.asResource { querySnapshot ->
             querySnapshot.documents.map {
-                val convertedObject = it.toObject<UserJobDto>() ?: UserJobDto()
-
-                val dto = convertedObject.copy(documentId = it.id)
+                val dto = it.toObject<UserJobDto>() ?: UserJobDto()
 
                 dto.toDomain()
             }
         }
     }
 
-    override suspend fun deleteUserJob(documentId: String): Flow<Resource<Unit>> {
+    override suspend fun deleteUserJob(userUid: String, jobId: String): Flow<Resource<Unit>> {
         return handleResponse.safeFireBaseCall {
-            userJobsDataSource.deleteUserJob(documentId)
+            userJobsDataSource.deleteUserJob(userUid = userUid, jobId = jobId)
         }
     }
 }

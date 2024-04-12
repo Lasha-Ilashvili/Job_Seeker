@@ -7,6 +7,6 @@ import javax.inject.Inject
 class DeleteUserJobUseCase @Inject constructor(
     private val userJobsRepository: UserJobsRepository
 ) {
-    suspend operator fun invoke(documentId: String?) =
-        userJobsRepository.deleteUserJob(documentId = documentId ?: "")
+    suspend operator fun invoke(userUid: String, jobId: String) =
+        userJobsRepository.deleteUserJob(userUid = userUid, jobId = jobId)
 }

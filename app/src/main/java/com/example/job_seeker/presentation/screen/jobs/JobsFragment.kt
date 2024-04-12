@@ -23,7 +23,7 @@ class JobsFragment : BaseFragment<FragmentJobsBinding>(FragmentJobsBinding::infl
 //        getJobs()
         viewModel.onEvent(JobsEvent.GetUserJobs)
         binding.root.setOnClickListener {
-            viewModel.onEvent(JobsEvent.DeleteUserJob(job.documentId))
+            viewModel.onEvent(JobsEvent.DeleteUserJob(job.userUid, job.id))
 //            viewModel.onEvent(JobsEvent.AddUserJob(job))
         }
     }
@@ -51,7 +51,6 @@ class JobsFragment : BaseFragment<FragmentJobsBinding>(FragmentJobsBinding::infl
         }
 
         jobs?.let {
-
         }
 
         userJobs?.let {

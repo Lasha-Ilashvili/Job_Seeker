@@ -6,8 +6,8 @@ import com.example.job_seeker.domain.model.user_jobs.GetUserJob
 
 fun UserJobDto.toDomain() = GetUserJob(
     id = id,
+    userUid = userUid,
     title = title,
-    documentId = documentId,
     company = company,
     date = date,
     category = category,
@@ -17,6 +17,4 @@ fun UserJobDto.toDomain() = GetUserJob(
     description = description,
     location = location,
     redirectUrl = redirectUrl,
-    latitude = latitude,
-    longitude = longitude
 )
