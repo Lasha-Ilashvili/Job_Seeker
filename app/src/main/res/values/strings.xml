@@ -9,11 +9,17 @@
     <string name="repeat_password">Repeat Password</string>
     <string name="next">Next</string>
     <string name="log_in">Log In</string>
-    <string name="remember_me">Remember Me</string>
     <string name="invalid_input">Invalid input</string>
     <string name="matching_password_error">Passwords do not match</string>
     <string name="password_weak">weak</string>
     <string name="password_medium">medium</string>
     <string name="password_strong">strong</string>
     <string name="password_error">Password must be at least 8 characters long</string>
+    <string name="jobs">Jobs</string>
+    <string name="jobs_applied">Jobs Applied</string>
+    <string name="user_panel">User Panel</string>
+    <string name="log_out">Log Out</string>
+    <string name="do_you_want_to_log_out">Do you want to log_out?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

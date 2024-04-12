@@ -7,7 +7,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.job_seeker.databinding.FragmentJobsBinding
 import com.example.job_seeker.presentation.base.BaseFragment
 import com.example.job_seeker.presentation.event.jobs.JobsEvent
-import com.example.job_seeker.presentation.model.user_jobs.UserJob
 import com.example.job_seeker.presentation.state.jobs.JobsState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -17,13 +16,12 @@ import kotlinx.coroutines.launch
 class JobsFragment : BaseFragment<FragmentJobsBinding>(FragmentJobsBinding::inflate) {
 
     private val viewModel: JobsViewModel by viewModels()
-    private lateinit var job: UserJob
 
     override fun setUp() {
 //        getJobs()
-        viewModel.onEvent(JobsEvent.GetUserJobs)
+//        viewModel.onEvent(JobsEvent.GetUserJobs)
         binding.root.setOnClickListener {
-            viewModel.onEvent(JobsEvent.DeleteUserJob(job.userUid, job.id))
+//            viewModel.onEvent(JobsEvent.DeleteUserJob(job.userUid, job.id))
 //            viewModel.onEvent(JobsEvent.AddUserJob(job))
         }
     }
@@ -54,7 +52,7 @@ class JobsFragment : BaseFragment<FragmentJobsBinding>(FragmentJobsBinding::infl
         }
 
         userJobs?.let {
-            job = it.first()
+
         }
     }
 }

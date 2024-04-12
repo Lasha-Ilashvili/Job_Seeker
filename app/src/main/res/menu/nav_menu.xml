@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-<!--    <item-->
-<!--        android:id="@+id/parkingFragment" />-->
+    <item
+        android:id="@+id/jobsFragment"
+        android:icon="@drawable/ic_jobs"
+        android:title="@string/jobs" />
 
-<!--    <item-->
-<!--        android:id="@+id/mapFragment" />-->
+    <item
+        android:id="@+id/userJobsFragment"
+        android:icon="@drawable/ic_jobs_applied"
+        android:title="@string/jobs_applied" />
 
+    <item
+        android:id="@+id/userPanelBottomSheet"
+        android:icon="@drawable/ic_hamburger_menu"
+        android:title="@string/user_panel" />
 
 </menu>

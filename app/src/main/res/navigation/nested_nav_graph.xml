@@ -9,5 +9,25 @@
         android:id="@+id/jobsFragment"
         android:name="com.example.job_seeker.presentation.screen.jobs.JobsFragment"
         android:label="fragment_jobs"
-        tools:layout="@layout/fragment_jobs" />
+        tools:layout="@layout/fragment_jobs" >
+        <action
+            android:id="@+id/action_jobsFragment_to_jobFragment"
+            app:destination="@id/jobFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userJobsFragment"
+        android:name="com.example.job_seeker.presentation.screen.user_jobs.UserJobsFragment"
+        android:label="fragment_user_jobs"
+        tools:layout="@layout/fragment_user_jobs" />
+    <dialog
+        android:id="@+id/userPanelBottomSheet"
+        android:name="com.example.job_seeker.presentation.screen.user_panel_bottom_sheet.UserPanelBottomSheet"
+        android:label="fragment_user_panel_bottom_sheet"
+        tools:layout="@layout/fragment_user_panel_bottom_sheet" />
+    <fragment
+        android:id="@+id/jobFragment"
+        android:name="com.example.job_seeker.presentation.screen.job.JobFragment"
+        android:label="fragment_job"
+        tools:layout="@layout/fragment_job" />
+
 </navigation>
