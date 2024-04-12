@@ -74,7 +74,7 @@ class LogInViewModel @Inject constructor(
         viewModelScope.launch {
             logInUseCase(email = email, password = password).collect {
                 when (it) {
-                    is Resource.Success -> _uiEvent.emit(LoginUiEvent.NavigateToBottomNavFragment)
+                    is Resource.Success -> _uiEvent.emit(LoginUiEvent.NavigateToJobs)
 
                     is Resource.Error -> updateErrorMessage(it.errorMessage)
 
@@ -105,6 +105,6 @@ class LogInViewModel @Inject constructor(
     }
 
     sealed interface LoginUiEvent {
-        data object NavigateToBottomNavFragment : LoginUiEvent
+        data object NavigateToJobs : LoginUiEvent
     }
 }

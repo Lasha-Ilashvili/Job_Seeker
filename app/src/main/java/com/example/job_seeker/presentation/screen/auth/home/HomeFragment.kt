@@ -3,6 +3,7 @@ package com.example.job_seeker.presentation.screen.auth.home
 import androidx.navigation.fragment.findNavController
 import com.example.job_seeker.databinding.FragmentHomeBinding
 import com.example.job_seeker.presentation.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
