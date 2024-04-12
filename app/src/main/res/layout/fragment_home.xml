@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".presentation.screen.auth.home.HomeFragment">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnLogIn"
+        style="@style/customButtonMaterial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="250dp"
+        android:text="@string/log_in"
+        android:textSize="@dimen/text_size_medium" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSignUp"
+        style="@style/customButtonMaterial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="@dimen/margin_medium_plus"
+        android:text="@string/sign_up"
+        android:textSize="@dimen/text_size_medium" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -3,11 +3,45 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/jobsFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/jobsFragment"
-        android:name="com.example.job_seeker.presentation.screen.jobs.JobsFragment"
-        android:label="fragment_jobs"
-        tools:layout="@layout/fragment_jobs" />
+        android:id="@+id/logInFragment"
+        android:name="com.example.job_seeker.presentation.screen.auth.log_in.LogInFragment"
+        android:label="fragment_log_in"
+        tools:layout="@layout/fragment_log_in" >
+        <action
+            android:id="@+id/action_logInFragment_to_bottomNavFragment"
+            app:destination="@id/bottomNavFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.example.job_seeker.presentation.screen.auth.sign_up.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_logInFragment"
+            app:destination="@id/logInFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/bottomNavFragment"
+        android:name="com.example.job_seeker.presentation.screen.bottomNavFragment.BottomNavFragment"
+        android:label="fragment_bottom_nav"
+        tools:layout="@layout/fragment_bottom_nav" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.job_seeker.presentation.screen.auth.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
 </navigation>

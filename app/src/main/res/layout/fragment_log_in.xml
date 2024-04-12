@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.screen.auth.log_in.LogInFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/logInFragmentLayoutContainer"
+        style="@style/customLayoutPadding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/progressBar"
+            layout="@layout/loading_layout" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_back_arrow"
+            style="@style/customButtonArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back_arrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvAuthorization"
+            style="@style/customPageTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/log_in"
+            app:layout_constraintBottom_toBottomOf="@id/btn_back_arrow"
+            app:layout_constraintStart_toEndOf="@id/btn_back_arrow"
+            app:layout_constraintTop_toTopOf="@id/btn_back_arrow" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvAuthorization">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEmailInput"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/open_sans_regular"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            app:endIconMode="password_toggle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etEmail">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPasswordInput"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/open_sans_regular"
+                android:hint="@string/password"
+                android:inputType="textPassword" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSaveSession"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:text="@string/remember_me"
+            app:layout_constraintBottom_toBottomOf="@id/checkBox"
+            app:layout_constraintEnd_toStartOf="@id/checkBox"
+            app:layout_constraintTop_toBottomOf="@id/etPassword"
+            app:layout_constraintTop_toTopOf="@id/checkBox" />
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            style="@style/checkBoxStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium_plus"
+            android:layout_marginEnd="@dimen/margin_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etPassword" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogIn"
+            style="@style/customButtonMaterial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium_plus"
+            android:text="@string/log_in"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/checkBox" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

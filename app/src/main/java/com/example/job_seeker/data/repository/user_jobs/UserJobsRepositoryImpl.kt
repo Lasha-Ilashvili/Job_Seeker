@@ -9,6 +9,7 @@ import com.example.job_seeker.data.mapper.user_jobs.toDomain
 import com.example.job_seeker.data.model.user_jobs.UserJobDto
 import com.example.job_seeker.domain.model.user_jobs.GetUserJob
 import com.example.job_seeker.domain.repository.user_jobs.UserJobsRepository
+import com.google.firebase.firestore.toObject
 import kotlinx.coroutines.flow.Flow
 
 class UserJobsRepositoryImpl(
@@ -26,23 +27,12 @@ class UserJobsRepositoryImpl(
         return handleResponse.safeFireBaseCall {
             userJobsDataSource.getUserJobs()
         }.asResource { querySnapshot ->
-            querySnapshot.documents.map { documentSnapshot ->
-                UserJobDto(
-                    id = documentSnapshot.getString("id") ?: "",
-                    documentId = documentSnapshot.id,
-                    title = documentSnapshot.getString("title") ?: "",
-                    company = documentSnapshot.getString("company") ?: "",
-                    date = documentSnapshot.getString("date") ?: "",
-                    category = documentSnapshot.getString("category"),
-                    contractType = documentSnapshot.getString("contractType"),
-                    contractTime = documentSnapshot.getString("contractTime"),
-                    salary = documentSnapshot.getString("salary") ?: "",
-                    description = documentSnapshot.getString("description") ?: "",
-                    location = documentSnapshot.getString("location") ?: "",
-                    redirectUrl = documentSnapshot.getString("redirectUrl") ?: "",
-                    latitude = documentSnapshot.getDouble("latitude"),
-                    longitude = documentSnapshot.getDouble("longitude")
-                ).toDomain()
+            querySnapshot.documents.map {
+                val convertedObject = it.toObject<UserJobDto>() ?: UserJobDto()
+
+                val dto = convertedObject.copy(documentId = it.id)
+
+                dto.toDomain()
             }
         }
     }

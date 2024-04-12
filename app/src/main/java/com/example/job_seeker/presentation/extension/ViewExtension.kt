@@ -11,12 +11,12 @@ import com.google.android.material.snackbar.Snackbar
 
 fun View.showSnackBar(message: String) {
     val snackBar = Snackbar.make(this, message, Snackbar.LENGTH_SHORT)
-        .setBackgroundTint(context.getColor(R.color.black))//R.color.red))
+        .setBackgroundTint(context.getColor(R.color.red))
 
     snackBar.view.layoutParams.apply {
         this as FrameLayout.LayoutParams
 
-        val margin = 20//context.resources.getDimensionPixelSize(R.dimen.margin_large)
+        val margin = context.resources.getDimensionPixelSize(R.dimen.margin_large)
 
         gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
         setMargins(0, margin, 0, 0)

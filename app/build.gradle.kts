@@ -91,4 +91,7 @@ dependencies {
 
     // FireStore
     implementation("com.google.firebase:firebase-firestore")
+
+    // FireBaseAuth
+    implementation("com.google.firebase:firebase-auth")
 }

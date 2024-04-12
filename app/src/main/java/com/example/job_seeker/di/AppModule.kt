@@ -5,8 +5,11 @@ import com.example.job_seeker.BuildConfig.APP_KEY
 import com.example.job_seeker.BuildConfig.BASE_URL
 import com.example.job_seeker.BuildConfig.DEBUG
 import com.example.job_seeker.data.common.HandleResponse
-import com.example.job_seeker.data.service.jobs.JobsService
+import com.example.job_seeker.data.data_source.auth.AuthDataSource
 import com.example.job_seeker.data.data_source.user_jobs.UserJobsDataSource
+import com.example.job_seeker.data.service.jobs.JobsService
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -107,7 +110,19 @@ object AppModule {
 
     @Singleton
     @Provides
+    fun provideFireBaseAuth(): FirebaseAuth {
+        return Firebase.auth
+    }
+
+    @Singleton
+    @Provides
     fun provideUserJobsDataSource(fireStore: FirebaseFirestore): UserJobsDataSource {
-        return UserJobsDataSource(fireStore)
+        return UserJobsDataSource(fireStore = fireStore)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAuthDataSource(firebaseAuth: FirebaseAuth): AuthDataSource {
+        return AuthDataSource(firebaseAuth = firebaseAuth)
     }
 }

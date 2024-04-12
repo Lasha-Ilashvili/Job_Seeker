@@ -2,4 +2,18 @@
     <string name="app_name">Job_Seeker</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="password_requirement">Must have 7+ characters, 1 uppercase, 1 digit</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="next">Next</string>
+    <string name="log_in">Log In</string>
+    <string name="remember_me">Remember Me</string>
+    <string name="invalid_input">Invalid input</string>
+    <string name="matching_password_error">Passwords do not match</string>
+    <string name="password_weak">weak</string>
+    <string name="password_medium">medium</string>
+    <string name="password_strong">strong</string>
+    <string name="password_error">Password must be at least 8 characters long</string>
 </resources>
