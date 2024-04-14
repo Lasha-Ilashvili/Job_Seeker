@@ -6,6 +6,7 @@ import com.example.job_seeker.BuildConfig.BASE_URL
 import com.example.job_seeker.BuildConfig.DEBUG
 import com.example.job_seeker.data.common.HandleResponse
 import com.example.job_seeker.data.data_source.auth.AuthDataSource
+import com.example.job_seeker.data.data_source.jobs.JobsPagingSource
 import com.example.job_seeker.data.data_source.user_jobs.UserJobsDataSource
 import com.example.job_seeker.data.service.jobs.JobsService
 import com.google.firebase.auth.FirebaseAuth
@@ -124,5 +125,11 @@ object AppModule {
     @Provides
     fun provideAuthDataSource(firebaseAuth: FirebaseAuth): AuthDataSource {
         return AuthDataSource(firebaseAuth = firebaseAuth)
+    }
+
+    @Singleton
+    @Provides
+    fun provideJobsPagingSource(jobsService: JobsService): JobsPagingSource {
+        return JobsPagingSource(service = jobsService, country = "gb", size = 15)
     }
 }

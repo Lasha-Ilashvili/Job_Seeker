@@ -1,7 +1,6 @@
 package com.example.job_seeker.presentation.screen.auth.log_in
 
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -91,7 +90,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
     }
 
     private fun handleState(state: LogInState) = with(state) {
-        binding.progressBar.root.visibility = if (isLoading) VISIBLE else GONE
+        binding.progressBar.root.isVisible = isLoading
 
         binding.btnLogIn.isEnabled = isButtonEnabled
 

@@ -1,9 +1,8 @@
 package com.example.job_seeker.presentation.screen.auth.sign_up
 
 import android.os.Bundle
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -85,7 +84,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
     }
 
     private fun handleState(signUpState: SignUpState) = with(signUpState) {
-        binding.progressBar.root.visibility = if (isLoading) VISIBLE else GONE
+        binding.progressBar.root.isVisible = isLoading
 
         errorMessage?.let {
             binding.root.showSnackBar(errorMessage)

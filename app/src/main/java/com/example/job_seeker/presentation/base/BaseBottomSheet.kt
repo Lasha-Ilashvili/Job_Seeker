@@ -17,6 +17,7 @@ abstract class BaseBottomSheet<VB : ViewBinding>(private val inflate: Inflate<VB
 
     open fun observe() = Unit
 
+    /* Implementation Details */
 
     private var _binding: VB? = null
     val binding get() = _binding!!

@@ -23,6 +23,6 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun signUp(email: String, password: String): Flow<Resource<Unit>> {
         return handleResponse.safeFireBaseCall {
             authDataSource.signUp(email, password)
-        }.asResource { }
+        }.asResource {}
     }
 }

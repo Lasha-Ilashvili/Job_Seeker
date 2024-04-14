@@ -14,6 +14,7 @@ import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -31,7 +32,7 @@ class LogInViewModel @Inject constructor(
     val logInState = _logInState.asStateFlow()
 
     private val _uiEvent = MutableSharedFlow<LoginUiEvent>()
-    val uiEvent get() = _uiEvent
+    val uiEvent get() = _uiEvent.asSharedFlow()
 
     fun onEvent(event: LogInEvent) = with(event) {
         when (this) {
