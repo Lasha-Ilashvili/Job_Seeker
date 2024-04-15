@@ -8,6 +8,7 @@ import com.example.job_seeker.data.common.HandleResponse
 import com.example.job_seeker.data.data_source.auth.AuthDataSource
 import com.example.job_seeker.data.data_source.jobs.JobsPagingSource
 import com.example.job_seeker.data.data_source.user_jobs.UserJobsDataSource
+import com.example.job_seeker.data.service.job.JobService
 import com.example.job_seeker.data.service.jobs.JobsService
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -130,6 +131,12 @@ object AppModule {
     @Singleton
     @Provides
     fun provideJobsPagingSource(jobsService: JobsService): JobsPagingSource {
-        return JobsPagingSource(service = jobsService, country = "gb", size = 15)
+        return JobsPagingSource(service = jobsService)
+    }
+
+    @Singleton
+    @Provides
+    fun provideJobService(retrofit: Retrofit): JobService {
+        return retrofit.create(JobService::class.java)
     }
 }

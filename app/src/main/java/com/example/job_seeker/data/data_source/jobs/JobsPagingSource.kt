@@ -7,25 +7,19 @@ import com.example.job_seeker.data.service.jobs.JobsService
 import com.example.job_seeker.domain.model.jobs.GetJob
 
 class JobsPagingSource(
-    private val service: JobsService,
-    private val country: String,
-    private val size: Int
+    private val service: JobsService
 ) : PagingSource<Int, GetJob>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, GetJob> {
         val page = params.key ?: 1
 
         return try {
-            val response = service.getJobs(
-                country = country,
-                page = page,
-                size = size
-            )
+            val response = service.getJobs(page = page)
             val body = response.body()
 
             if (response.isSuccessful && body != null) {
                 LoadResult.Page(
-                    data = body.toDomain(),
+                    data = body.jobItems.map { it.toDomain() },
                     prevKey = if (page == 0) null else page - 1,
                     nextKey = if (body.jobItems.isEmpty()) null else page + 1
                 )

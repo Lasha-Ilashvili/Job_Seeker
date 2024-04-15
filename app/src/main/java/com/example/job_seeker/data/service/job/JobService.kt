@@ -1,4 +1,4 @@
-package com.example.job_seeker.data.service.jobs
+package com.example.job_seeker.data.service.job
 
 import com.example.job_seeker.data.model.jobs.JobDto
 import retrofit2.Response
@@ -7,12 +7,12 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 
-interface JobsService {
+interface JobService {
 
     @GET("api/jobs/{country}/search/{page}")
-    suspend fun getJobs(
+    suspend fun getJob(
         @Path("country") country: String = "gb",
-        @Path("page") page: Int,
-        @Query("results_per_page") size: Int = 15
+        @Path("page") page: Int = 1,
+        @Query("what") jobId: String
     ): Response<JobDto>
 }

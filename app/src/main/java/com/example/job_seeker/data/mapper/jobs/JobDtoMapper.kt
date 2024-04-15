@@ -4,11 +4,7 @@ import com.example.job_seeker.data.model.jobs.JobDto
 import com.example.job_seeker.domain.model.jobs.GetJob
 
 
-fun JobDto.toDomain() = jobItems.map {
-    it.toDomain()
-}
-
-private fun JobDto.JobItem.toDomain() = GetJob(
+fun JobDto.JobItem.toDomain() = GetJob(
     id = id,
     salaryMax = salaryMax ?: 0.0,
     salaryMin = salaryMin ?: 0.0,
