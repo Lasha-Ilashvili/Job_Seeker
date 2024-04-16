@@ -3,7 +3,6 @@ package com.example.job_seeker.domain.model.user_jobs
 
 data class GetUserJob(
     val id: String,
-    val userUid:String,
     val title: String,
     val company: String,
     val date: String,

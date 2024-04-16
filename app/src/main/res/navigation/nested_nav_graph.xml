@@ -28,6 +28,10 @@
         android:id="@+id/jobFragment"
         android:name="com.example.job_seeker.presentation.screen.job.JobFragment"
         android:label="fragment_job"
-        tools:layout="@layout/fragment_job" />
+        tools:layout="@layout/fragment_job" >
+        <argument
+            android:name="jobId"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

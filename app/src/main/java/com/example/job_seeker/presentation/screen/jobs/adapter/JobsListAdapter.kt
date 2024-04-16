@@ -8,12 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.job_seeker.databinding.JobItemBinding
 import com.example.job_seeker.presentation.model.jobs.Job
 
-class JobsListAdapter :
-    PagingDataAdapter<Job, JobsListAdapter.TransactionsViewHolder>(
-        TransactionsDiffUtil
-    ) {
+class JobsListAdapter : PagingDataAdapter<Job, JobsListAdapter.JobsViewHolder>(JobsDiffUtil) {
 
-    object TransactionsDiffUtil : DiffUtil.ItemCallback<Job>() {
+    object JobsDiffUtil : DiffUtil.ItemCallback<Job>() {
         override fun areItemsTheSame(
             oldItem: Job,
             newItem: Job
@@ -29,8 +26,10 @@ class JobsListAdapter :
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionsViewHolder {
-        return TransactionsViewHolder(
+    var onClick: ((String) -> Unit)? = null
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JobsViewHolder {
+        return JobsViewHolder(
             JobItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -39,17 +38,25 @@ class JobsListAdapter :
         )
     }
 
-    override fun onBindViewHolder(holder: TransactionsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: JobsViewHolder, position: Int) {
         holder.bind()
     }
 
-    inner class TransactionsViewHolder(private val binding: JobItemBinding) :
+    inner class JobsViewHolder(private val binding: JobItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener {
+                getItem(bindingAdapterPosition)?.let {
+                    onClick?.invoke(it.id)
+                }
+            }
+        }
 
         fun bind() {
             getItem(bindingAdapterPosition)?.let { job ->
                 with(binding) {
-
+                    tvTitle.text = job.title
                 }
             }
         }

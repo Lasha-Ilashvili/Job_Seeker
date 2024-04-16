@@ -6,7 +6,6 @@ import com.example.job_seeker.presentation.model.user_jobs.UserJob
 
 fun UserJob.toDomain() = GetUserJob(
     id = id,
-    userUid = userUid,
     title = title,
     company = company,
     date = date,

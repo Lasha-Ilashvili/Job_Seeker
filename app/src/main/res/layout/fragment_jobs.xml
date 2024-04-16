@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".presentation.screen.jobs.JobsFragment">
 
+    <include
+        android:id="@+id/progressBar"
+        layout="@layout/loading_layout" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvJobs"
         android:layout_width="match_parent"

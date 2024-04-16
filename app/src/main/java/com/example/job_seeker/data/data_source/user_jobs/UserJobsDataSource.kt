@@ -9,8 +9,8 @@ import com.google.firebase.firestore.QuerySnapshot
 class UserJobsDataSource(
     private val fireStore: FirebaseFirestore
 ) {
-    fun addUserJob(job: UserJobDto): Task<Unit> {
-        return fireStore.document("users/${job.userUid}/jobs/${job.id}").set(job).continueWith {}
+    fun addUserJob(userUid: String, job: UserJobDto): Task<Unit> {
+        return fireStore.document("users/${userUid}/jobs/${job.id}").set(job).continueWith {}
     }
 
     fun getUserJobs(userUid: String): Task<QuerySnapshot> {

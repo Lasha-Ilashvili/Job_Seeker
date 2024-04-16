@@ -17,9 +17,9 @@ class UserJobsRepositoryImpl(
     private val handleResponse: HandleResponse
 ) : UserJobsRepository {
 
-    override suspend fun addUserJob(userJob: GetUserJob): Flow<Resource<Unit>> {
+    override suspend fun addUserJob(userUid: String, userJob: GetUserJob): Flow<Resource<Unit>> {
         return handleResponse.safeFireBaseCall {
-            userJobsDataSource.addUserJob(userJob.toData())
+            userJobsDataSource.addUserJob(userUid = userUid, job = userJob.toData())
         }
     }
 

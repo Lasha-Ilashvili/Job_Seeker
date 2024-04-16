@@ -1,9 +1,11 @@
 package com.example.job_seeker.presentation.screen.jobs
 
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.example.job_seeker.databinding.FragmentJobsBinding
 import com.example.job_seeker.presentation.base.BaseFragment
@@ -20,17 +22,11 @@ import kotlinx.coroutines.launch
 class JobsFragment : BaseFragment<FragmentJobsBinding>(FragmentJobsBinding::inflate) {
 
     private val viewModel: JobsViewModel by viewModels()
-
     private lateinit var adapter: JobsListAdapter
 
     override fun setUp() {
         setRecycler()
         getJobs()
-//        viewModel.onEvent(JobsEvent.GetUserJobs)
-        binding.root.setOnClickListener {
-//            viewModel.onEvent(JobsEvent.DeleteUserJob(job.userUid, job.id))
-//            viewModel.onEvent(JobsEvent.AddUserJob(job))
-        }
     }
 
     override fun observe() {
@@ -41,26 +37,14 @@ class JobsFragment : BaseFragment<FragmentJobsBinding>(FragmentJobsBinding::infl
                 }
             }
         }
-        adapter.addLoadStateListener { loadState ->
-            when (loadState.refresh) {
-                is LoadState.Error -> {
-                    (loadState.refresh as LoadState.Error).error.message?.let { message ->
-                        binding.root.showSnackBar(message = message)
-                    }
-                }
-
-                else -> {
-//                    println(loadState.refresh is LoadState.Loading)
-//                    binding.progressBar.root.isVisible = isLoading
-                }
-            }
-        }
     }
 
     /* IMPLEMENTATION DETAILS */
 
     private fun setRecycler() {
-        adapter = JobsListAdapter()
+        adapter = JobsListAdapter().apply {
+            onClick = ::navigateToJob
+        }
         binding.rvJobs.adapter = adapter
     }
 
@@ -68,9 +52,35 @@ class JobsFragment : BaseFragment<FragmentJobsBinding>(FragmentJobsBinding::infl
         viewModel.onEvent(JobsEvent.GetJobs)
     }
 
-    private suspend fun handleState(jobsState: JobsState) = with(jobsState) {
-        jobs?.let {
+    private suspend fun handleState(jobsState: JobsState) {
+        handleLoadState()
+
+        jobsState.jobs?.let {
             adapter.submitData(it)
         }
+    }
+
+    private fun handleLoadState() = with(binding){
+        adapter.addLoadStateListener { loadState ->
+            when (loadState.refresh) {
+                is LoadState.Error -> {
+                    (loadState.refresh as LoadState.Error).error.message?.let { message ->
+                        root.showSnackBar(message = message)
+                    }
+                }
+
+                else -> {
+                    progressBar.root.isVisible = loadState.refresh is LoadState.Loading
+                }
+            }
+        }
+    }
+
+    private fun navigateToJob(jobId: String) {
+        findNavController().navigate(
+            JobsFragmentDirections.actionJobsFragmentToJobFragment(
+                jobId = jobId
+            )
+        )
     }
 }

@@ -8,6 +8,6 @@ import javax.inject.Inject
 class AddUserJobUseCase @Inject constructor(
     private val userJobsRepository: UserJobsRepository
 ) {
-    suspend operator fun invoke(userJob: GetUserJob) =
-        userJobsRepository.addUserJob(userJob = userJob)
+    suspend operator fun invoke(userUid: String, userJob: GetUserJob) =
+        userJobsRepository.addUserJob(userUid = userUid, userJob = userJob)
 }
