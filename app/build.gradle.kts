@@ -94,4 +94,7 @@ dependencies {
 
     // FireBaseAuth
     implementation("com.google.firebase:firebase-auth")
+
+    // Realtime Database
+    implementation("com.google.firebase:firebase-database")
 }
