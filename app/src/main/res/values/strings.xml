@@ -21,4 +21,7 @@
     <string name="do_you_want_to_log_out">Do you want to log_out?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="apply_question">Did you apply?</string>
+    <string name="apply_question_explanation">Let us know, and we\'ll help you track your application.</string>
+    <string name="add_user_job_state">Job is added to you collection!</string>
 </resources>

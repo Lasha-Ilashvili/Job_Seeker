@@ -18,6 +18,8 @@ class BottomNavFragment :
         setBottomNavBar()
     }
 
+    /* IMPLEMENTATION DETAILS */
+
     private fun setBottomNavBar() {
         with(binding.bottomNav) {
             val nestedNavHostFragment = childFragmentManager.findFragmentById(

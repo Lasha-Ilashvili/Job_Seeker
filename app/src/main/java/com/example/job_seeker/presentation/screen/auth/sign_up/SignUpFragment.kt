@@ -87,7 +87,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
         binding.progressBar.root.isVisible = isLoading
 
         errorMessage?.let {
-            binding.root.showSnackBar(errorMessage)
+            binding.root.showSnackBar(it)
             viewModel.onEvent(SignUpEvent.ResetErrorMessage)
         }
 

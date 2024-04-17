@@ -2,6 +2,7 @@ package com.example.job_seeker.presentation.screen.job
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.job_seeker.R
 import com.example.job_seeker.data.common.Resource
 import com.example.job_seeker.domain.usecase.auth.FireBaseUserUidUseCase
 import com.example.job_seeker.domain.usecase.job.GetJobUseCase
@@ -35,6 +36,7 @@ class JobViewModel @Inject constructor(
             is JobEvent.GetJob -> getJob(jobId = jobId)
             is JobEvent.AddUserJob -> addUserJob(job = job)
             JobEvent.ResetErrorMessage -> updateErrorMessage()
+            JobEvent.ResetAddUserJobMessage -> updateAddUserJobMessage()
         }
     }
 
@@ -60,7 +62,7 @@ class JobViewModel @Inject constructor(
         viewModelScope.launch {
             addUserJobUseCase(userUid = fireBaseUserUidUseCase(), userJob = getUserJob(job).toDomain()).collect {
                 when (it) {
-                    is Resource.Success -> {}
+                    is Resource.Success -> updateAddUserJobMessage(R.string.add_user_job_state)
 
                     is Resource.Loading -> _jobState.update { currentState ->
                         currentState.copy(isLoading = it.loading)
@@ -91,6 +93,12 @@ class JobViewModel @Inject constructor(
     private fun updateErrorMessage(message: String? = null) {
         _jobState.update { currentState ->
             currentState.copy(errorMessage = message)
+        }
+    }
+
+    private fun updateAddUserJobMessage(message: Int? = null) {
+        _jobState.update { currentState ->
+            currentState.copy(addUserJobMessage = message)
         }
     }
 }

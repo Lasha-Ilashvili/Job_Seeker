@@ -42,7 +42,7 @@ class UserJobsFragment : BaseFragment<FragmentUserJobsBinding>(FragmentUserJobsB
         binding.progressBar.root.isVisible = isLoading
 
         errorMessage?.let {
-            binding.root.showSnackBar(errorMessage)
+            binding.root.showSnackBar(it)
             viewModel.onEvent(UserJobsEvent.ResetErrorMessage)
         }
 

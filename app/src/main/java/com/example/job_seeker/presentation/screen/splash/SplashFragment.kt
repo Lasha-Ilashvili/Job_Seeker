@@ -26,6 +26,8 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
         }
     }
 
+    /* IMPLEMENTATION DETAILS */
+
     private fun handleNavigationEvents(event: SplashViewModel.SplashUiEvent) {
         when (event) {
             is SplashViewModel.SplashUiEvent.NavigateToJobs ->
