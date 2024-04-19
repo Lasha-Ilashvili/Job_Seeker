@@ -2,6 +2,7 @@ package com.example.job_seeker.presentation.screen.jobs.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -56,7 +57,10 @@ class JobsListAdapter : PagingDataAdapter<Job, JobsListAdapter.JobsViewHolder>(J
         fun bind() {
             getItem(bindingAdapterPosition)?.let { job ->
                 with(binding) {
-                    tvTitle.text = job.title
+                    jobItem.btnDelete.isVisible = false
+                    jobItem.tvJob.text = job.title
+                    jobItem.tvCompany.text = job.company
+                    tvSalary.text = job.salary
                 }
             }
         }

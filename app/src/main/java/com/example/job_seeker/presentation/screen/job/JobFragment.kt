@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.job_seeker.R
 import com.example.job_seeker.databinding.FragmentJobBinding
@@ -31,9 +32,20 @@ class JobFragment : BaseFragment<FragmentJobBinding>(FragmentJobBinding::inflate
     override fun setUp() {
         viewModel.onEvent(JobEvent.GetJobApplicants(jobId = args.jobId))
         viewModel.onEvent(JobEvent.GetJob(jobId = args.jobId))
-        binding.root.setOnClickListener {
-            redirectedToWebPage = true
-            openWebPage()
+    }
+
+    override fun setListeners() {
+        setRefreshListener()
+        
+        with(binding) {
+            btnBack.setOnClickListener {
+                findNavController().popBackStack()
+            }
+
+            btnApply.setOnClickListener {
+                redirectedToWebPage = true
+                openWebPage()
+            }
         }
     }
 
@@ -48,6 +60,15 @@ class JobFragment : BaseFragment<FragmentJobBinding>(FragmentJobBinding::inflate
     }
 
     /* IMPLEMENTATION DETAILS */
+
+    private fun setRefreshListener() = with(binding.jobSwipeRefresh) {
+        setOnRefreshListener {
+            isRefreshing = false
+
+            viewModel.onEvent(JobEvent.GetJobApplicants(jobId = args.jobId))
+            viewModel.onEvent(JobEvent.GetJob(jobId = args.jobId))
+        }
+    }
 
     private fun handleState(jobState: JobState) = with(jobState) {
         binding.progressBar.root.isVisible = isLoading
@@ -71,13 +92,13 @@ class JobFragment : BaseFragment<FragmentJobBinding>(FragmentJobBinding::inflate
 
         data?.let {
             job = it
-//            binding.tvTitle.text = it.title
+            setLayout(it)
 
             if (redirectedToWebPage) viewModel.onEvent(JobEvent.CheckUserJob(jobId = job.id))
         }
 
         jobApplicants?.let {
-            binding.tvTitle.text = it.toString()
+            binding.tvApplicants.text = it.toString()
         }
     }
 
@@ -100,5 +121,13 @@ class JobFragment : BaseFragment<FragmentJobBinding>(FragmentJobBinding::inflate
                 viewModel.onEvent(JobEvent.UpdateJobApplicants(jobId = args.jobId))
             }
         )
+    }
+
+    private fun setLayout(job: Job) = with(binding) {
+        tvJob.text = job.title
+        tvCompany.text = job.company
+        tvDate.text = job.date
+        tvSalary.text = job.salary
+        tvDescription.text = job.description
     }
 }

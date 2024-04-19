@@ -10,6 +10,7 @@ import com.example.job_seeker.presentation.event.user_jobs.UserJobsEvent
 import com.example.job_seeker.presentation.mapper.user_job.toPresentation
 import com.example.job_seeker.presentation.state.user_jobs.UserJobsState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -27,8 +28,12 @@ class UserJobsViewModel @Inject constructor(
     private val _userJobsState = MutableStateFlow(UserJobsState())
     val userJobsState get() = _userJobsState.asStateFlow()
 
+    private val _uiEvent = MutableSharedFlow<UserJobsUiEvent>()
+    val uiEvent get() = _uiEvent
+
     fun onEvent(event: UserJobsEvent) = with(event) {
         when (this) {
+            is UserJobsEvent.OpenUserJob -> openUserJob(jobId = jobId)
             is UserJobsEvent.DeleteUserJob -> deleteUserJob(jobId = jobId)
             UserJobsEvent.GetUserJobs -> getUserJobs()
             UserJobsEvent.ResetErrorMessage -> updateErrorMessage()
@@ -55,6 +60,12 @@ class UserJobsViewModel @Inject constructor(
         }
     }
 
+    private fun openUserJob(jobId: String){
+        viewModelScope.launch {
+            _uiEvent.emit(UserJobsUiEvent.NavigateToUserJob(jobId = jobId))
+        }
+    }
+
     private fun deleteUserJob(jobId: String) {
         viewModelScope.launch {
             deleteUserJobUseCase(userUid = fireBaseUserUidUseCase(), jobId = jobId).collect {
@@ -75,5 +86,9 @@ class UserJobsViewModel @Inject constructor(
         _userJobsState.update { currentState ->
             currentState.copy(errorMessage = message)
         }
+    }
+
+    sealed interface UserJobsUiEvent {
+        data class NavigateToUserJob(val jobId:String) : UserJobsUiEvent
     }
 }

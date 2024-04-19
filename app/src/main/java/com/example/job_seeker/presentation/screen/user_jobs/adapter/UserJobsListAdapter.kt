@@ -27,6 +27,7 @@ class UserJobsListAdapter :
         }
     }
 
+    var onClick: ((String) -> Unit)? = null
     var onDeleteClick: ((String) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserJobsViewHolder {
@@ -47,17 +48,25 @@ class UserJobsListAdapter :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.root.setOnClickListener {
-                getItem(bindingAdapterPosition)?.let {userJob->
-                    onDeleteClick?.invoke(userJob.id)
+            with(binding) {
+                root.setOnClickListener {
+                    getItem(bindingAdapterPosition)?.let { userJob ->
+                        onClick?.invoke(userJob.id)
+                    }
+                }
+                userJobItem.btnDelete.setOnClickListener {
+                    getItem(bindingAdapterPosition)?.let { userJob ->
+                        onDeleteClick?.invoke(userJob.id)
+                    }
                 }
             }
         }
 
         fun bind() {
             getItem(bindingAdapterPosition)?.let { userJob ->
-                with(binding) {
-                    tvTitle.text = userJob.title
+                with(binding.userJobItem) {
+                    tvJob.text = userJob.title
+                    tvCompany.text = userJob.company
                 }
             }
         }

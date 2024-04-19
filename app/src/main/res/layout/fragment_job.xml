@@ -1,17 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/jobSwipeRefresh"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.screen.job.JobFragment">
+    android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/progressBar"
-        layout="@layout/loading_layout" />
-
-    <TextView
-        android:id="@+id/tvTitle"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:padding="@dimen/padding_standard"
+        tools:context=".presentation.screen.job.JobFragment">
 
-</FrameLayout>
+        <include
+            android:id="@+id/progressBar"
+            layout="@layout/loading_layout" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnBack"
+            style="@style/customButtonArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back_arrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvJob"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            android:fontFamily="@font/open_sans_regular"
+            android:textAllCaps="false"
+            android:textSize="@dimen/text_size_large"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnBack"
+            tools:text="Developer" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCompany"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_regular"
+            android:textSize="@dimen/text_size_medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvJob"
+            tools:text="Google" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:fontFamily="@font/open_sans_regular"
+            app:layout_constraintBottom_toBottomOf="@+id/tvCompany"
+            app:layout_constraintStart_toEndOf="@+id/tvCompany"
+            app:layout_constraintTop_toTopOf="@+id/tvCompany"
+            tools:text="2024/06/15" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvApplicants"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_regular"
+            app:layout_constraintStart_toStartOf="@+id/tvCompany"
+            app:layout_constraintTop_toBottomOf="@+id/tvCompany"
+            tools:text="4" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:fontFamily="@font/open_sans_regular"
+            android:text="@string/applicants"
+            app:layout_constraintBottom_toBottomOf="@+id/tvApplicants"
+            app:layout_constraintStart_toEndOf="@+id/tvApplicants"
+            app:layout_constraintTop_toTopOf="@+id/tvApplicants" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSalary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:fontFamily="@font/open_sans_regular"
+            android:textSize="@dimen/text_size_medium"
+            app:layout_constraintStart_toStartOf="@+id/tvApplicants"
+            app:layout_constraintTop_toBottomOf="@+id/tvApplicants"
+            tools:text="50K/yr" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvAboutTheJob"
+            style="@style/customFieldsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/about_the_job"
+            android:textAllCaps="false"
+            app:layout_constraintStart_toStartOf="@+id/tvSalary"
+            app:layout_constraintTop_toBottomOf="@+id/tvSalary" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:fontFamily="@font/open_sans_regular"
+            android:textSize="@dimen/text_size_medium"
+            app:layout_constraintStart_toStartOf="@+id/tvAboutTheJob"
+            app:layout_constraintTop_toBottomOf="@+id/tvAboutTheJob"
+            tools:text="description" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnApply"
+            style="@style/customButtonMaterial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium_plus"
+            android:layout_marginBottom="@dimen/margin_medium_plus"
+            android:text="@string/apply"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -97,4 +97,7 @@ dependencies {
 
     // Realtime Database
     implementation("com.google.firebase:firebase-database")
+
+    // refresh on swipe
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
 }

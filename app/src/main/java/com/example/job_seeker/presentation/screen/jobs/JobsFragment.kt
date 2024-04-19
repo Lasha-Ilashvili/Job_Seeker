@@ -29,6 +29,10 @@ class JobsFragment : BaseFragment<FragmentJobsBinding>(FragmentJobsBinding::infl
         getJobs()
     }
 
+    override fun setListeners() {
+        setRefreshListener()
+    }
+
     override fun observe() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -52,6 +56,14 @@ class JobsFragment : BaseFragment<FragmentJobsBinding>(FragmentJobsBinding::infl
         viewModel.onEvent(JobsEvent.GetJobs)
     }
 
+    private fun setRefreshListener() = with(binding.jobsSwipeRefresh) {
+        setOnRefreshListener {
+            isRefreshing = false
+
+            getJobs()
+        }
+    }
+
     private suspend fun handleState(jobsState: JobsState) {
         handleLoadState()
 
@@ -60,7 +72,7 @@ class JobsFragment : BaseFragment<FragmentJobsBinding>(FragmentJobsBinding::infl
         }
     }
 
-    private fun handleLoadState() = with(binding){
+    private fun handleLoadState() = with(binding) {
         adapter.addLoadStateListener { loadState ->
             when (loadState.refresh) {
                 is LoadState.Error -> {

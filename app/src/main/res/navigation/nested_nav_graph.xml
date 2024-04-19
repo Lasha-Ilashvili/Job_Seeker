@@ -18,7 +18,11 @@
         android:id="@+id/userJobsFragment"
         android:name="com.example.job_seeker.presentation.screen.user_jobs.UserJobsFragment"
         android:label="fragment_user_jobs"
-        tools:layout="@layout/fragment_user_jobs" />
+        tools:layout="@layout/fragment_user_jobs" >
+        <action
+            android:id="@+id/action_userJobsFragment_to_jobFragment"
+            app:destination="@id/jobFragment" />
+    </fragment>
     <dialog
         android:id="@+id/userPanelBottomSheet"
         android:name="com.example.job_seeker.presentation.screen.user_panel_bottom_sheet.UserPanelBottomSheet"
