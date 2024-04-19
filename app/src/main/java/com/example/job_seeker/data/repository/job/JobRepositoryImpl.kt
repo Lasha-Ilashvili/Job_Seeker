@@ -15,7 +15,7 @@ class JobRepositoryImpl(
     private val handleResponse: HandleResponse
 ) : JobRepository {
 
-    override suspend fun getJob(jobId: String): Flow<Resource<GetJob>> {
+    override fun getJob(jobId: String): Flow<Resource<GetJob>> {
         return handleResponse.safeApiCall {
             jobService.getJob(jobId = jobId)
         }.asResource { dto ->

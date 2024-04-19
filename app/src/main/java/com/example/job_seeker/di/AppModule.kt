@@ -15,7 +15,7 @@ import com.example.job_seeker.data.service.jobs.JobsService
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -45,16 +45,6 @@ object AppModule {
                 HttpLoggingInterceptor.Level.NONE
         }
     }
-
-//    @Singleton
-//    @Provides
-//    fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
-//        val builder = OkHttpClient.Builder()
-//
-//        if (DEBUG) builder.addInterceptor(loggingInterceptor)
-//
-//        return builder.build()
-//    }
 
     @Provides
     @Singleton
@@ -117,7 +107,7 @@ object AppModule {
     @Singleton
     @Provides
     fun provideDatabase(): DatabaseReference {
-        return FirebaseDatabase.getInstance(DATABASE_BASE_URL).reference
+        return Firebase.database(DATABASE_BASE_URL).reference
     }
 
     @Singleton

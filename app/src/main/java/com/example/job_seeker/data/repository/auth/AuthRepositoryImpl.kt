@@ -14,13 +14,13 @@ class AuthRepositoryImpl @Inject constructor(
     private val handleResponse: HandleResponse
 ) : AuthRepository {
 
-    override suspend fun logIn(email: String, password: String): Flow<Resource<Unit>> {
+    override fun logIn(email: String, password: String): Flow<Resource<Unit>> {
         return handleResponse.safeFireBaseCall {
             authDataSource.logIn(email, password)
         }.asResource {}
     }
 
-    override suspend fun signUp(email: String, password: String): Flow<Resource<Unit>> {
+    override fun signUp(email: String, password: String): Flow<Resource<Unit>> {
         return handleResponse.safeFireBaseCall {
             authDataSource.signUp(email, password)
         }.asResource {}

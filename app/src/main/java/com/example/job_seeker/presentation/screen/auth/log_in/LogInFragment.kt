@@ -56,7 +56,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiEvent.collect {
-                    handleUiState(it)
+                    handleUiState()
                 }
             }
         }
@@ -105,7 +105,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
         }
     }
 
-    private fun handleUiState(event: LogInViewModel.LoginUiEvent) {
+    private fun handleUiState() {
         findNavController().navigate(LogInFragmentDirections.actionLogInFragmentToBottomNavFragment())
     }
 }

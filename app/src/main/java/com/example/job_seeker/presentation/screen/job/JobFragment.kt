@@ -34,7 +34,6 @@ class JobFragment : BaseFragment<FragmentJobBinding>(FragmentJobBinding::inflate
         binding.root.setOnClickListener {
             redirectedToWebPage = true
             openWebPage()
-//            viewModel.onEvent(JobEvent.UpdateJobApplicants(jobId = args.jobId))
         }
     }
 
@@ -72,9 +71,13 @@ class JobFragment : BaseFragment<FragmentJobBinding>(FragmentJobBinding::inflate
 
         data?.let {
             job = it
-            binding.tvTitle.text = it.title
+//            binding.tvTitle.text = it.title
 
             if (redirectedToWebPage) viewModel.onEvent(JobEvent.CheckUserJob(jobId = job.id))
+        }
+
+        jobApplicants?.let {
+            binding.tvTitle.text = it.toString()
         }
     }
 
@@ -94,6 +97,7 @@ class JobFragment : BaseFragment<FragmentJobBinding>(FragmentJobBinding::inflate
             negativeButtonText = getString(R.string.no),
             positiveButtonClickAction = {
                 viewModel.onEvent(JobEvent.AddUserJob(job = job))
+                viewModel.onEvent(JobEvent.UpdateJobApplicants(jobId = args.jobId))
             }
         )
     }

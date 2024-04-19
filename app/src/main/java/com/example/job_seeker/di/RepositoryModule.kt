@@ -71,12 +71,10 @@ object RepositoryModule {
     @Singleton
     @Provides
     fun provideJobApplicantsRepository(
-        jobApplicantsDataSource: JobApplicantsDataSource,
-        handleResponse: HandleResponse
+        jobApplicantsDataSource: JobApplicantsDataSource
     ): JobApplicantsRepository {
         return JobApplicantsRepositoryImpl(
-            jobApplicantsDataSource = jobApplicantsDataSource,
-            handleResponse = handleResponse
+            jobApplicantsDataSource = jobApplicantsDataSource
         )
     }
 }

@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 
 interface JobRepository {
-    suspend fun getJob(jobId: String): Flow<Resource<GetJob>>
+    fun getJob(jobId: String): Flow<Resource<GetJob>>
 }

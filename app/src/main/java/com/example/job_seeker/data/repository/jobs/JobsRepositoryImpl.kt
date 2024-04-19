@@ -13,7 +13,7 @@ class JobsRepositoryImpl(
     private val jobsPagingSource: JobsPagingSource
 ) : JobsRepository {
 
-    override suspend fun getJobs(): Flow<PagingData<GetJob>> {
+    override fun getJobs(): Flow<PagingData<GetJob>> {
         return Pager(PagingConfig(pageSize = 6)) {
             jobsPagingSource
         }.flow

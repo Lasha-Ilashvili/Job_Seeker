@@ -52,13 +52,23 @@ class JobViewModel @Inject constructor(
 
     private fun updateJobApplicants(jobId: String) {
         viewModelScope.launch {
-            updateJobApplicantsUseCase(jobId = jobId)
+            updateJobApplicantsUseCase(jobId = jobId, userUid = fireBaseUserUidUseCase())
         }
     }
 
     private fun getJobApplicants(jobId: String) {
         viewModelScope.launch {
-            getJobApplicantsUseCase(jobId = jobId)
+            getJobApplicantsUseCase(jobId = jobId).collect {
+                when (it) {
+                    is Resource.Loading -> {}
+
+                    is Resource.Success -> _jobState.update { currentState ->
+                        currentState.copy(jobApplicants = it.data.toInt())
+                    }
+
+                    is Resource.Error -> updateErrorMessage(message = it.errorMessage)
+                }
+            }
         }
     }
 
