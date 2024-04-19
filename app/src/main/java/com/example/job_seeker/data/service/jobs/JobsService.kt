@@ -11,8 +11,8 @@ interface JobsService {
 
     @GET("api/jobs/{country}/search/{page}")
     suspend fun getJobs(
-        @Path("country") country: String = "gb",
+        @Path("country") country: String = "us",
         @Path("page") page: Int,
-        @Query("results_per_page") size: Int = 15
+        @Query("results_per_page") size: Int = 25
     ): Response<JobDto>
 }

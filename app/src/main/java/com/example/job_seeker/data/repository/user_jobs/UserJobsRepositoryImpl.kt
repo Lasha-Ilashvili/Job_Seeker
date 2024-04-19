@@ -17,13 +17,13 @@ class UserJobsRepositoryImpl(
     private val handleResponse: HandleResponse
 ) : UserJobsRepository {
 
-    override suspend fun addUserJob(userUid: String, userJob: GetUserJob): Flow<Resource<Unit>> {
+    override fun addUserJob(userUid: String, userJob: GetUserJob): Flow<Resource<Unit>> {
         return handleResponse.safeFireBaseCall {
             userJobsDataSource.addUserJob(userUid = userUid, job = userJob.toData())
         }
     }
 
-    override suspend fun getUserJobs(userUid: String): Flow<Resource<List<GetUserJob>>> {
+    override fun getUserJobs(userUid: String): Flow<Resource<List<GetUserJob>>> {
         return handleResponse.safeFireBaseCall {
             userJobsDataSource.getUserJobs(userUid = userUid)
         }.asResource { querySnapshot ->
@@ -35,7 +35,15 @@ class UserJobsRepositoryImpl(
         }
     }
 
-    override suspend fun deleteUserJob(userUid: String, jobId: String): Flow<Resource<Unit>> {
+    override fun userJobExists(userUid: String, jobId: String): Flow<Resource<Boolean>> {
+        return handleResponse.safeFireBaseCall {
+            userJobsDataSource.getUserJob(userUid = userUid, jobId = jobId)
+        }.asResource {
+            it.exists()
+        }
+    }
+
+    override fun deleteUserJob(userUid: String, jobId: String): Flow<Resource<Unit>> {
         return handleResponse.safeFireBaseCall {
             userJobsDataSource.deleteUserJob(userUid = userUid, jobId = jobId)
         }

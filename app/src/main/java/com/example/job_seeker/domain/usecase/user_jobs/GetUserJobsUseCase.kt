@@ -7,6 +7,6 @@ import javax.inject.Inject
 class GetUserJobsUseCase @Inject constructor(
     private val userJobsRepository: UserJobsRepository
 ) {
-    suspend operator fun invoke(userUid: String) =
-        userJobsRepository.getUserJobs(userUid)
+    operator fun invoke(userUid: String) =
+        userJobsRepository.getUserJobs(userUid = userUid)
 }

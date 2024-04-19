@@ -4,9 +4,9 @@ import com.example.job_seeker.domain.repository.user_jobs.UserJobsRepository
 import javax.inject.Inject
 
 
-class DeleteUserJobUseCase @Inject constructor(
+class UserJobExistsUseCase @Inject constructor(
     private val userJobsRepository: UserJobsRepository
 ) {
     operator fun invoke(userUid: String, jobId: String) =
-        userJobsRepository.deleteUserJob(userUid = userUid, jobId = jobId)
+        userJobsRepository.userJobExists(userUid = userUid, jobId = jobId)
 }

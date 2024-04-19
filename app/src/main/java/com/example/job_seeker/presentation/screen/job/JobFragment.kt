@@ -25,14 +25,16 @@ class JobFragment : BaseFragment<FragmentJobBinding>(FragmentJobBinding::inflate
 
     private val viewModel: JobViewModel by viewModels()
     private val args: JobFragmentArgs by navArgs()
-    private var applyState: Boolean = false
     private lateinit var job: Job
+    private var redirectedToWebPage = false
 
     override fun setUp() {
+        viewModel.onEvent(JobEvent.GetJobApplicants(jobId = args.jobId))
         viewModel.onEvent(JobEvent.GetJob(jobId = args.jobId))
-
         binding.root.setOnClickListener {
+            redirectedToWebPage = true
             openWebPage()
+//            viewModel.onEvent(JobEvent.UpdateJobApplicants(jobId = args.jobId))
         }
     }
 
@@ -48,16 +50,6 @@ class JobFragment : BaseFragment<FragmentJobBinding>(FragmentJobBinding::inflate
 
     /* IMPLEMENTATION DETAILS */
 
-    private fun openWebPage() {
-        val intent = Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse(job.redirectUrl)
-        )
-        startActivity(intent)
-
-        applyState = true
-    }
-
     private fun handleState(jobState: JobState) = with(jobState) {
         binding.progressBar.root.isVisible = isLoading
 
@@ -71,15 +63,27 @@ class JobFragment : BaseFragment<FragmentJobBinding>(FragmentJobBinding::inflate
             viewModel.onEvent(JobEvent.ResetAddUserJobMessage)
         }
 
+        userJobExists?.let {
+            redirectedToWebPage = false
+            if (!it) setUpDialog()
+
+            viewModel.onEvent(JobEvent.ResetUserJobState)
+        }
+
         data?.let {
             job = it
             binding.tvTitle.text = it.title
 
-            if (applyState) {
-                applyState = false
-                setUpDialog()
-            }
+            if (redirectedToWebPage) viewModel.onEvent(JobEvent.CheckUserJob(jobId = job.id))
         }
+    }
+
+    private fun openWebPage() {
+        val intent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse(job.redirectUrl)
+        )
+        startActivity(intent)
     }
 
     private fun setUpDialog() {

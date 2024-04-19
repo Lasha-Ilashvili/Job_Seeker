@@ -2,6 +2,7 @@ package com.example.job_seeker.data.data_source.user_jobs
 
 import com.example.job_seeker.data.model.user_jobs.UserJobDto
 import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 
@@ -15,6 +16,10 @@ class UserJobsDataSource(
 
     fun getUserJobs(userUid: String): Task<QuerySnapshot> {
         return fireStore.collection("users/$userUid/jobs").get()
+    }
+
+    fun getUserJob(userUid: String, jobId: String): Task<DocumentSnapshot> {
+        return fireStore.collection("users/$userUid/jobs").document(jobId).get()
     }
 
     fun deleteUserJob(userUid: String, jobId: String): Task<Unit> {

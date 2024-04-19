@@ -3,17 +3,19 @@ package com.example.job_seeker.di
 import com.example.job_seeker.BuildConfig.APP_ID
 import com.example.job_seeker.BuildConfig.APP_KEY
 import com.example.job_seeker.BuildConfig.BASE_URL
+import com.example.job_seeker.BuildConfig.DATABASE_BASE_URL
 import com.example.job_seeker.BuildConfig.DEBUG
 import com.example.job_seeker.data.common.HandleResponse
 import com.example.job_seeker.data.data_source.auth.AuthDataSource
+import com.example.job_seeker.data.data_source.job_applicants.JobApplicantsDataSource
 import com.example.job_seeker.data.data_source.jobs.JobsPagingSource
 import com.example.job_seeker.data.data_source.user_jobs.UserJobsDataSource
 import com.example.job_seeker.data.service.job.JobService
 import com.example.job_seeker.data.service.jobs.JobsService
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -114,8 +116,8 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideDatabase(): FirebaseDatabase {
-        return Firebase.database
+    fun provideDatabase(): DatabaseReference {
+        return FirebaseDatabase.getInstance(DATABASE_BASE_URL).reference
     }
 
     @Singleton
@@ -128,6 +130,12 @@ object AppModule {
     @Provides
     fun provideUserJobsDataSource(fireStore: FirebaseFirestore): UserJobsDataSource {
         return UserJobsDataSource(fireStore = fireStore)
+    }
+
+    @Singleton
+    @Provides
+    fun provideJobApplicantsDataSource(database: DatabaseReference): JobApplicantsDataSource {
+        return JobApplicantsDataSource(database = database)
     }
 
     @Singleton

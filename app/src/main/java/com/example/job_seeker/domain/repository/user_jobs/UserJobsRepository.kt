@@ -6,7 +6,8 @@ import kotlinx.coroutines.flow.Flow
 
 
 interface UserJobsRepository {
-    suspend fun addUserJob(userUid: String, userJob: GetUserJob): Flow<Resource<Unit>>
-    suspend fun getUserJobs(userUid: String): Flow<Resource<List<GetUserJob>>>
-    suspend fun deleteUserJob(userUid: String, jobId: String): Flow<Resource<Unit>>
+    fun addUserJob(userUid: String, userJob: GetUserJob): Flow<Resource<Unit>>
+    fun getUserJobs(userUid: String): Flow<Resource<List<GetUserJob>>>
+    fun userJobExists(userUid: String, jobId: String): Flow<Resource<Boolean>>
+    fun deleteUserJob(userUid: String, jobId: String): Flow<Resource<Unit>>
 }

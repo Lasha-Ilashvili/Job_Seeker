@@ -6,7 +6,10 @@ import com.example.job_seeker.R
 import com.example.job_seeker.data.common.Resource
 import com.example.job_seeker.domain.usecase.auth.FireBaseUserUidUseCase
 import com.example.job_seeker.domain.usecase.job.GetJobUseCase
+import com.example.job_seeker.domain.usecase.job_applicants.GetJobApplicantsUseCase
+import com.example.job_seeker.domain.usecase.job_applicants.UpdateJobApplicantsUseCase
 import com.example.job_seeker.domain.usecase.user_jobs.AddUserJobUseCase
+import com.example.job_seeker.domain.usecase.user_jobs.UserJobExistsUseCase
 import com.example.job_seeker.presentation.event.job.JobEvent
 import com.example.job_seeker.presentation.mapper.jobs.toPresentation
 import com.example.job_seeker.presentation.mapper.user_job.toDomain
@@ -25,7 +28,10 @@ import javax.inject.Inject
 class JobViewModel @Inject constructor(
     private val fireBaseUserUidUseCase: FireBaseUserUidUseCase,
     private val getJobUseCase: GetJobUseCase,
-    private val addUserJobUseCase: AddUserJobUseCase
+    private val userJobExists: UserJobExistsUseCase,
+    private val addUserJobUseCase: AddUserJobUseCase,
+    private val getJobApplicantsUseCase: GetJobApplicantsUseCase,
+    private val updateJobApplicantsUseCase: UpdateJobApplicantsUseCase
 ) : ViewModel() {
 
     private val _jobState = MutableStateFlow(JobState())
@@ -33,10 +39,26 @@ class JobViewModel @Inject constructor(
 
     fun onEvent(event: JobEvent) = with(event) {
         when (this) {
+            is JobEvent.UpdateJobApplicants -> updateJobApplicants(jobId = jobId)
+            is JobEvent.GetJobApplicants -> getJobApplicants(jobId = jobId)
             is JobEvent.GetJob -> getJob(jobId = jobId)
+            is JobEvent.CheckUserJob -> checkUserJob(jobId = jobId)
             is JobEvent.AddUserJob -> addUserJob(job = job)
             JobEvent.ResetErrorMessage -> updateErrorMessage()
             JobEvent.ResetAddUserJobMessage -> updateAddUserJobMessage()
+            JobEvent.ResetUserJobState -> updateUserJobState()
+        }
+    }
+
+    private fun updateJobApplicants(jobId: String) {
+        viewModelScope.launch {
+            updateJobApplicantsUseCase(jobId = jobId)
+        }
+    }
+
+    private fun getJobApplicants(jobId: String) {
+        viewModelScope.launch {
+            getJobApplicantsUseCase(jobId = jobId)
         }
     }
 
@@ -58,9 +80,26 @@ class JobViewModel @Inject constructor(
         }
     }
 
+    private fun checkUserJob(jobId: String) {
+        viewModelScope.launch {
+            userJobExists(userUid = fireBaseUserUidUseCase(), jobId = jobId).collect {
+                when (it) {
+                    is Resource.Success -> updateUserJobState(if (it.data) null else false)
+
+                    is Resource.Error -> updateUserJobState(false)
+
+                    is Resource.Loading -> {}
+                }
+            }
+        }
+    }
+
     private fun addUserJob(job: Job) {
         viewModelScope.launch {
-            addUserJobUseCase(userUid = fireBaseUserUidUseCase(), userJob = getUserJob(job).toDomain()).collect {
+            addUserJobUseCase(
+                userUid = fireBaseUserUidUseCase(),
+                userJob = getUserJob(job).toDomain()
+            ).collect {
                 when (it) {
                     is Resource.Success -> updateAddUserJobMessage(R.string.add_user_job_state)
 
@@ -99,6 +138,12 @@ class JobViewModel @Inject constructor(
     private fun updateAddUserJobMessage(message: Int? = null) {
         _jobState.update { currentState ->
             currentState.copy(addUserJobMessage = message)
+        }
+    }
+
+    private fun updateUserJobState(userJobExists: Boolean? = null) {
+        _jobState.update { currentState ->
+            currentState.copy(userJobExists = userJobExists)
         }
     }
 }

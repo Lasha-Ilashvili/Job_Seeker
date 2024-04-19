@@ -7,6 +7,6 @@ import javax.inject.Inject
 class UpdateJobApplicantsUseCase @Inject constructor(
     private val jobApplicantsRepository: JobApplicantsRepository
 ) {
-    suspend operator fun invoke(userUid: String, jobId: String) =
-        jobApplicantsRepository.updateJobApplicants(userUid = userUid, jobId = jobId)
+    suspend operator fun invoke(jobId: String) =
+        jobApplicantsRepository.updateJobApplicants(jobId = jobId)
 }

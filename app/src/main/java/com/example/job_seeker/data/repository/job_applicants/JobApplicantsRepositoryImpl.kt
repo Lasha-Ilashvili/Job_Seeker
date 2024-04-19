@@ -9,11 +9,11 @@ class JobApplicantsRepositoryImpl(
     private val handleResponse: HandleResponse
 ) : JobApplicantsRepository {
 
-    override suspend fun updateJobApplicants(userUid: String, jobId: String) {
-
+    override suspend fun updateJobApplicants(jobId: String) {
+        jobApplicantsDataSource.updateJobApplicants(jobId = jobId)
     }
 
-    override suspend fun getJobApplicants(userUid: String, jobId: String) {
-
+    override suspend fun getJobApplicants(jobId: String) {
+        jobApplicantsDataSource.getJobApplicants(jobId = jobId)
     }
 }
